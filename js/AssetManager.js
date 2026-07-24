@@ -70,7 +70,7 @@ class AssetManager {
         };
 
         const soundPaths = {
-            ambient: `${basePath}assets/sounds/music.ogg`,
+            ambient: `${basePath}assets/sounds/music3.ogg`,
             static: `${basePath}assets/sounds/Static_sound.ogg`,
             staticLoop: `${basePath}assets/sounds/Static_sound.ogg`,
             vents: `${basePath}assets/sounds/vents.ogg`,
