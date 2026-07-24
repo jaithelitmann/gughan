@@ -107,7 +107,7 @@ class UIManager {
         
         // CONTROL PANEL text
         const text = document.createElement('div');
-        text.textContent = 'CONTROL PANEL';
+        text.textContent = 'THE HUB';
         text.style.color = '#fff';
         text.style.fontSize = '1.8vw';
         text.style.fontWeight = 'bold';
@@ -222,7 +222,7 @@ class UIManager {
         
         // Title
         const title = document.createElement('div');
-        title.textContent = '/// Control Panel';
+        title.textContent = '/// The Hub';
         title.style.fontSize = '2.5vw';
         title.style.fontWeight = 'bold';
         title.style.marginBottom = '5vh';
