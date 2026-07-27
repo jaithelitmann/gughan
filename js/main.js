@@ -232,7 +232,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     await preloadGameAssets();
     
     // 预加载背景图片（用于恐怖脸效果）
-    preloadBackgrounds();
     
     // 隐藏预加载动画
     hidePreloader();
