@@ -124,18 +124,7 @@ function hidePreloader() {
     }
 }
 
-// 页面加载完成后启动
-window.addEventListener('DOMContentLoaded', async () => {
-    // 禁用浏览器默认行为
-    disableBrowserDefaults();
-    
-    // 先预加载所有资源
-    await preloadGameAssets();
-    
-    // 预加载背景图片（用于恐怖脸效果）
-    
-    // 隐藏预加载动画
-    hidePreloader();
+hidePreloader();
     
     // 初始化游戏 j
     game = new Game();
