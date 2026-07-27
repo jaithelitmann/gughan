@@ -4,7 +4,7 @@ class EnemyAI {
         this.game = game;
         
         // ==================== AI配置系统 ====================
-        // Epstein AI配置（按夜数）
+        // epstein AI配置（按夜数）
         this.epsteinConfig = {
             1: {
                 aiLevel: 12,              // AI等级 (0-20)，12/20 = 60%移动概率
@@ -165,7 +165,7 @@ class EnemyAI {
         };
         
         // 当前配置（运行时使用）
-        this.currentEpsteinConfig = null;
+        this.currentepsteinConfig = null;
         this.currentTrumpConfig = null;
         
         // 爱泼斯坦的状态
@@ -457,19 +457,19 @@ class EnemyAI {
         // 根据夜数加载配置并设置AI等级
         this.loadAIConfig();
         
-        console.log(`Night ${this.game.state.currentNight} - Epstein AI Config:`, this.currentEpsteinConfig);
-        console.log(`Epstein will spawn in ${this.currentEpsteinConfig.spawnDelay / 1000} seconds...`);
+        console.log(`Night ${this.game.state.currentNight} - epstein AI Config:`, this.currentepsteinConfig);
+        console.log(`epstein will spawn in ${this.currentepsteinConfig.spawnDelay / 1000} seconds...`);
         
         // 根据配置延迟后EP出场（如果AI等级>0）
         if (this.epstein.aiLevel > 0) {
             const spawnTimer = setTimeout(() => {
-                console.log(`⏰ Spawn timer triggered after ${this.currentEpsteinConfig.spawnDelay}ms`);
-                this.spawnEpstein();
-            }, this.currentEpsteinConfig.spawnDelay);
+                console.log(`⏰ Spawn timer triggered after ${this.currentepsteinConfig.spawnDelay}ms`);
+                this.spawnepstein();
+            }, this.currentepsteinConfig.spawnDelay);
             
             console.log(`⏰ Spawn timer created:`, spawnTimer);
         } else {
-            console.log('Epstein AI level is 0, not spawning');
+            console.log('epstein AI level is 0, not spawning');
         }
         
         // Trump出场逻辑
@@ -504,8 +504,8 @@ class EnemyAI {
         if (this.game.state.customNight && night === 7) {
             const customLevels = this.game.state.customAILevels;
             
-            // Epstein 自定义配置
-            this.currentEpsteinConfig = {
+            // epstein 自定义配置
+            this.currentepsteinConfig = {
                 aiLevel: customLevels.epstein,
                 movementInterval: [9000, 10000],
                 movementDuration: 1000,
@@ -518,7 +518,7 @@ class EnemyAI {
                 soundLureResistance: 0.15
             };
             this.epstein.aiLevel = customLevels.epstein;
-            this.epstein.movementInterval = this.getRandomInterval(this.currentEpsteinConfig.movementInterval);
+            this.epstein.movementInterval = this.getRandomInterval(this.currentepsteinConfig.movementInterval);
             
             // Trump 自定义配置
             if (customLevels.trump > 0) {
@@ -552,7 +552,7 @@ class EnemyAI {
             // Hawking 的 AI 等级不影响移动，只影响是否激活
             
             console.log(`Custom Night AI Config loaded:`);
-            console.log(`- Epstein: Level ${this.epstein.aiLevel}`);
+            console.log(`- epstein: Level ${this.epstein.aiLevel}`);
             console.log(`- Trump: Level ${this.trump.aiLevel || 0}`);
             console.log(`- Hawking: Level ${customLevels.hawking}`);
             
@@ -560,10 +560,10 @@ class EnemyAI {
         }
         
         // 普通夜晚配置
-        // 加载Epstein配置
-        this.currentEpsteinConfig = this.epsteinConfig[night] || this.epsteinConfig[1];
-        this.epstein.aiLevel = this.currentEpsteinConfig.aiLevel;
-        this.epstein.movementInterval = this.getRandomInterval(this.currentEpsteinConfig.movementInterval);
+        // 加载epstein配置
+        this.currentepsteinConfig = this.epsteinConfig[night] || this.epsteinConfig[1];
+        this.epstein.aiLevel = this.currentepsteinConfig.aiLevel;
+        this.epstein.movementInterval = this.getRandomInterval(this.currentepsteinConfig.movementInterval);
         
         // 加载Trump配置（Night 2-5）
         if (night >= 2 && night <= 5) {
@@ -575,7 +575,7 @@ class EnemyAI {
         }
         
         console.log(`AI Config loaded for Night ${night}`);
-        console.log(`- Epstein: Level ${this.epstein.aiLevel}, Interval ${this.epstein.movementInterval}ms`);
+        console.log(`- epstein: Level ${this.epstein.aiLevel}, Interval ${this.epstein.movementInterval}ms`);
         if (this.currentTrumpConfig) {
             console.log(`- Trump: Level ${this.trump.aiLevel}, Interval ${this.trump.movementInterval}ms`);
         } else {
@@ -595,11 +595,11 @@ class EnemyAI {
     }
     
     // EP出场
-    spawnEpstein() {
+    spawnepstein() {
         if (this.epstein.hasSpawned) return;
         
         this.epstein.hasSpawned = true;
-        console.log('✅ Epstein has spawned!');
+        console.log('✅ epstein has spawned!');
         
         // 第一关触发摄像头故障，第二关及以后不触发
         if (this.game.state.currentNight === 1) {
@@ -667,11 +667,11 @@ class EnemyAI {
         // 使用 setTimeout 而不是 setInterval，以支持动态间隔
         const scheduleNextCheck = () => {
             // Night 4特殊机制：4AM后EP变得更激进
-            let currentConfig = this.currentEpsteinConfig;
+            let currentConfig = this.currentepsteinConfig;
             if (this.game.state.currentNight === 4 && this.game.state.currentTime >= 4) {
                 // 4AM后使用更激进的配置
                 currentConfig = {
-                    ...this.currentEpsteinConfig,
+                    ...this.currentepsteinConfig,
                     movementInterval: [8000, 10000],
                     movementProbability: {
                         forward: 1.0,
@@ -774,10 +774,10 @@ class EnemyAI {
         const currentDepth = this.locationDepth[currentLoc];
         
         // Night 4特殊机制：4AM后EP变得更激进
-        let config = this.currentEpsteinConfig;
+        let config = this.currentepsteinConfig;
         if (this.game.state.currentNight === 4 && this.game.state.currentTime >= 4) {
             config = {
-                ...this.currentEpsteinConfig,
+                ...this.currentepsteinConfig,
                 movementProbability: {
                     forward: 1.0,
                     lateral: 0.0,
@@ -809,7 +809,7 @@ class EnemyAI {
         
         // 如果当前步长是1且没有前进位置，尝试移动到office
         if (forwardLocations.length === 0 && currentDepth === 1) {
-            console.log(`Epstein moved: ${currentLoc} -> office`);
+            console.log(`epstein moved: ${currentLoc} -> office`);
             this.epstein.currentLocation = 'office';
             this.triggerJumpscare('epstein');
             return;
@@ -821,7 +821,7 @@ class EnemyAI {
         
         // 如果总概率为0或没有任何可移动位置，不移动
         if (totalProb === 0 || (forwardLocations.length === 0 && lateralLocations.length === 0 && backwardLocations.length === 0)) {
-            console.log(`Epstein has no valid path from ${currentLoc}`);
+            console.log(`epstein has no valid path from ${currentLoc}`);
             return;
         }
         
@@ -861,7 +861,7 @@ class EnemyAI {
                 selectedLocations = backwardLocations;
                 movementType = 'backward (fallback)';
             } else {
-                console.log(`Epstein has no valid path from ${currentLoc}`);
+                console.log(`epstein has no valid path from ${currentLoc}`);
                 return;
             }
         }
@@ -869,7 +869,7 @@ class EnemyAI {
         // 从选中的方向中随机选择一个位置
         const nextLocation = selectedLocations[Math.floor(Math.random() * selectedLocations.length)];
         
-        console.log(`Epstein moved [${movementType}]: ${currentLoc} (depth ${currentDepth}) -> ${nextLocation} (depth ${this.locationDepth[nextLocation]})`);
+        console.log(`epstein moved [${movementType}]: ${currentLoc} (depth ${currentDepth}) -> ${nextLocation} (depth ${this.locationDepth[nextLocation]})`);
         
         this.epstein.currentLocation = nextLocation;
         
@@ -1198,11 +1198,11 @@ class EnemyAI {
         
         if (this.epstein.hasSpawned && adjacentToEp && adjacentToEp.includes(soundLocation)) {
             // 根据配置检查是否抵抗sound吸引
-            const resistance = this.currentEpsteinConfig.soundLureResistance;
+            const resistance = this.currentepsteinConfig.soundLureResistance;
             if (resistance > 0) {
                 const failChance = Math.random();
                 if (failChance < resistance) {
-                    console.log(`Epstein resisted the sound lure! (${resistance * 100}% chance on Night ${this.game.state.currentNight})`);
+                    console.log(`epstein resisted the sound lure! (${resistance * 100}% chance on Night ${this.game.state.currentNight})`);
                     // 吸引失败，但仍然播放音效让玩家以为成功了
                     this.game.assets.playSound('blip', false, 0.5);
                     return false; // 返回false表示没有真正吸引到
@@ -1212,7 +1212,7 @@ class EnemyAI {
             // 吸引成功，EP移动到sound位置（可以前进或后退）
             const currentDepth = this.locationDepth[epCurrentLoc];
             const soundDepth = this.locationDepth[soundLocation];
-            console.log(`Epstein attracted by sound: ${epCurrentLoc} (depth ${currentDepth}) -> ${soundLocation} (depth ${soundDepth})`);
+            console.log(`epstein attracted by sound: ${epCurrentLoc} (depth ${currentDepth}) -> ${soundLocation} (depth ${soundDepth})`);
             
             this.epstein.currentLocation = soundLocation;
             
@@ -1226,7 +1226,7 @@ class EnemyAI {
             
             epAttracted = true;
         } else {
-            console.log(`Sound at ${soundLocation} is not adjacent to Epstein at ${epCurrentLoc}`);
+            console.log(`Sound at ${soundLocation} is not adjacent to epstein at ${epCurrentLoc}`);
         }
         
         // 尝试吸引Trump（如果已出场且不在爬行状态）
@@ -1406,7 +1406,7 @@ class EnemyAI {
     reset() {
         this.stop();
         
-        // 重置 Epstein
+        // 重置 epstein
         this.epstein.currentLocation = 'cam11';
         this.epstein.aiLevel = 0;
         this.epstein.hasMovedOnce = false;
