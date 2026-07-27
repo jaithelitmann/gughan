@@ -300,7 +300,7 @@ class UIManager {
             // 更新通风口文本（不包括dots span）
             const text1 = option1.querySelector('span:nth-child(2)');
             if (text1) {
-                text1.textContent = this.game.state.ventsClosed ? 'Open Air Vents' : 'Close Air Vents';
+                text1.textContent = this.game.state.ventsClosed ? 'Open Sperm Vents' : 'Close Sperm Vents';
             }
         } else {
             const arrow1 = option1.querySelector('.option-arrow');
