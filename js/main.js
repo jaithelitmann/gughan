@@ -149,8 +149,6 @@ async function preloadGameAssets() {
     ];
     
     const soundPaths = [
-        'assets/sounds/music.ogg',
-        'assets/sounds/music3.ogg',
         'assets/sounds/Static_sound.ogg',
         'assets/sounds/vents.ogg',
         'assets/sounds/jumpcare.ogg',
