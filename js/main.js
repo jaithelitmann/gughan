@@ -236,7 +236,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     // 隐藏预加载动画
     hidePreloader();
     
-    // 初始化游戏
+    // 初始化游戏 j
     game = new Game();
     staticNoise = new StaticNoise();
     
