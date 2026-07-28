@@ -127,51 +127,50 @@ function hidePreloader() {
 hidePreloader();
     
     // 初始化游戏 j
-    game = new Game();
-    staticNoise = new StaticNoise();
+game = new Game();
+staticNoise = new StaticNoise();
     
-    // 更新Continue按钮显示
-    game.updateContinueButton();
+game.updateContinueButton();
     
-    const mainMenu = document.getElementById('main-menu');
+const mainMenu = document.getElementById('main-menu');
     
-    // 检查是否从外部页面启动（带autostart参数）
-    const urlParams = new URLSearchParams(window.location.search);
-    const autostart = urlParams.get('autostart');
+// 检查是否从外部页面启动（带autostart参数）
+const urlParams = new URLSearchParams(window.location.search);
+const autostart = urlParams.get('autostart');
     
-    // 启动菜单音乐
-    const menuMusic = document.getElementById('menu-music');
-    if (menuMusic) {
-        menuMusic.volume = 0.5;
+// 启动菜单音乐
+const menuMusic = document.getElementById('menu-music');
+if (menuMusic) {
+    menuMusic.volume = 0.5;
         
-        // 如果是autostart，立即尝试播放
-        if (autostart === '1') {
-            // console.log('检测到autostart参数，尝试自动播放音乐...');
-            menuMusic.play().then(() => {
-                // console.log('✅ 音乐自动播放成功！');
-            }).catch(e => {
-                // console.log('❌ 自动播放失败，等待用户交互:', e);
-                // 失败则等待用户点击
-                setupManualPlayback();
-            });
-        } else {
-            // 正常流程：等待用户点击
+    // 如果是autostart，立即尝试播放
+    if (autostart === '1') {
+        // console.log('检测到autostart参数，尝试自动播放音乐...');
+        menuMusic.play().then(() => {
+            // console.log('✅ 音乐自动播放成功！');
+        }).catch(e => {
+            // console.log('❌ 自动播放失败，等待用户交互:', e);
+            // 失败则等待用户点击
             setupManualPlayback();
-        }
-        
-        function setupManualPlayback() {
-            const playMusic = () => {
-                if (mainMenu && !mainMenu.classList.contains('hidden')) {
-                    menuMusic.play().catch(e => {/* console.log('音乐播放需要用户交互') */});
-                }
-                document.removeEventListener('click', playMusic);
-                document.removeEventListener('keydown', playMusic);
-            };
-            
-            document.addEventListener('click', playMusic);
-            document.addEventListener('keydown', playMusic);
-        }
+        });
+    } else {
+        // 正常流程：等待用户点击
+        setupManualPlayback();
     }
+        
+    function setupManualPlayback() {
+        const playMusic = () => {
+            if (mainMenu && !mainMenu.classList.contains('hidden')) {
+                menuMusic.play().catch(e => {/* console.log('音乐播放需要用户交互') */});
+            }
+            document.removeEventListener('click', playMusic);
+            document.removeEventListener('keydown', playMusic);
+        };
+            
+        document.addEventListener('click', playMusic);
+        document.addEventListener('keydown', playMusic);
+    }
+}
     
     // 监听主菜单显示/隐藏，控制雪花和鬼脸效果
     const observer = new MutationObserver(() => {
